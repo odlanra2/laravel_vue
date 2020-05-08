@@ -1,25 +1,22 @@
 <template>
-  <div>
+  <div class="container">
   	<h2>Bienvenido</h2>
-    <form @submit.prevent="login"  name="login">
+    <div class="d-flex justify-content-center">
+       <form @submit.prevent="login"  name="login">
       
       <div class="form-group">
         <div class="input-group">
-          <label class="control-label" for="user">
-            {{'email'}}
-          </label>
+          
           <i class="bar"/>
-          <input type="text" id="user" v-model="user"   required="required" name="user"/>
+          <input type="text" id="user" v-model="user"   required="required" name="user" placeholder="usuario" />
          
         </div>
       </div>
       <div class="form-group">
         <div class="input-group">
-          <label class="control-label" for="password">
-            {{'password'}}
-          </label>
+         
           <i class="bar"/>
-          <input type="password" id="password"  v-model="pwd"   required="required" name="password" autocomplete="on"/>
+          <input type="password" id="password"  v-model="pwd"   required="required" name="password" autocomplete="on" placeholder="password"/>
          
         </div>
       </div>
@@ -39,6 +36,9 @@
        
       </div>
     </form>
+
+    </div>
+   
     
 
   </div>
@@ -70,7 +70,7 @@ export default {
   methods:{
   	login(){
   		this.$store.dispatch('AUTH_REQUEST', {email:this.user, password:this.pwd}).then(()=>{
-               console.log('login exitoso');
+          this.$router.push('/admin')
   		}).catch(err=>{
   			this.error = true
 
