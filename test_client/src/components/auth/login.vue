@@ -24,10 +24,17 @@
         </div>
       </div>
       <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between down-container">
-      <button class="btnn btn-primary"  >
+      <button class="btnn btn-primary" >
           Ingresar
        </button>
-       <div class="loading" >
+       <div class="loading"  v-if="status==='loading'" >
+         <p>Espere por favor ...</p>
+       </div>
+        <div class="loading"  v-if="status==='error'" >
+           <p>usuario y contraseña incorrecta</p>
+       </div>
+       <div class="loading"  v-if="status==='success'" >
+           <p>correcto</p>
        </div>
        
       </div>
@@ -52,6 +59,12 @@ export default {
       id:false
 
     }
+  },
+
+  computed:{
+  	status:function(){
+  		return this.$store.state.login.status
+  	}
   },
 
   methods:{

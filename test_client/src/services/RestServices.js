@@ -6,13 +6,13 @@ var url = process.env.NODE_ENV === 'production'
 let token = JSON.parse(localStorage.getItem('user-token'))
 
 let config = JSON.stringify({
- 
+
 })
 
 const RestService = axios.create({
   baseURL: url,
   headers: {
-   'token': 'ebf8ebbc77b700ed77d14afc03467335',
+   'token': '',
    'session': token ? token.session : ''
   }
 })

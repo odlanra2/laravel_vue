@@ -13,11 +13,32 @@ const getters = {
 
 const actions = {
   'AUTH_REQUEST': ({ commit, dispatch }, user) => {
-     console.log('respuesta desde login:', user)
+     
      if (state.status!=='loading'){
      	 return new Promise((resolve, reject)=> {
+            commit('AUTH_REQUEST', user.email)
             TestServices.post('login', user).then(res=>{
-            	console.log(res);
+            	 if (res.data.session) {
+                     
+                     const token = res.data.session
+                     localStorage.setItem('user-token', JSON.stringify(token))
+                     localStorage.setItem('user-user', JSON.stringify(res.data.user))
+
+                     TestServices.setToken(token);
+
+                     commit('AUTH_SUCCESS', token)
+             
+                     resolve(res)
+
+               }else {
+                commit('AUTH_ERROR', user.user)
+                localStorage.removeItem('user-token')
+                localStorage.removeItem('user-user')
+                localStorage.removeItem('id_session')
+                 reject(user.user)
+               }
+
+            	
             })
      	 });
      }
