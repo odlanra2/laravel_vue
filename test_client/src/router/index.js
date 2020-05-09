@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../components/auth/login.vue'
 import AppLayout from '../components/admin/AppLayout.vue'
 import Admin from '../components/admin/admin.vue'
+import Productos from '../components/admin/productos.vue'
 import store from '../store'
 
 const ifNotAuthenticated = (to, from, next) => {
@@ -11,7 +12,7 @@ const ifNotAuthenticated = (to, from, next) => {
     next()
     return
   }
-  next('/admin')
+  next('/admin/admin')
 }
 
 const ifAuthenticated = (to, from, next) => {
@@ -30,21 +31,25 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Login',
     component: Login,
-    /*beforeEnter: ifNotAuthenticated,*/
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: '/admin',
     name: 'Admin',
     component: AppLayout,
-    /*beforeEnter: ifAuthenticated*/
+    beforeEnter: ifAuthenticated,
     children: [
         {
           name: 'admin',
           path: 'admin',
           component: Admin,
         },
-       
-      ],
+         {
+          name: 'productos',
+          path: 'productos',
+          component:  Productos,
+        },
+        ],
   }
 ]
 

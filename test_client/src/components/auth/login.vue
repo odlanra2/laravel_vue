@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-  	<h2>Bienvenido</h2>
+  	<h2 class="text-center">Bienvenido</h2>
     <div class="d-flex justify-content-center">
        <form @submit.prevent="login"  name="login">
       
@@ -70,7 +70,7 @@ export default {
   methods:{
   	login(){
   		this.$store.dispatch('AUTH_REQUEST', {email:this.user, password:this.pwd}).then(()=>{
-          this.$router.push('/admin')
+          this.$router.push('/admin/admin')
   		}).catch(err=>{
   			this.error = true
 

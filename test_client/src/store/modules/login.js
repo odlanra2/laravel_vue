@@ -46,7 +46,10 @@ const actions = {
 
    },
   'AUTH_LOGOUT': ({ commit, dispatch }) => {
-
+       //console.log('salir');
+       commit('AUTH_LOGOUT')
+       localStorage.removeItem('user-token')
+       localStorage.removeItem('user-user')
   }
 }
 
@@ -67,6 +70,7 @@ const mutations = {
     console.log('AUTH_ERROR mutations', state.status)
   },
   'AUTH_LOGOUT': (state) => {
+    console.log(state);
     state.status = 'logout'
     state.token = ''
   },
