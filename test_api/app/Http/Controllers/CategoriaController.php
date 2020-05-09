@@ -24,11 +24,11 @@ class CategoriaController extends Controller
             $data = $request->all();
             $categoria = new categoria();
             $categoria->nombre = $data['nombre'];
-            $categoria->foto= $data['foto'];
+            $categoria->foto= 'defecto';
             $categoria->categoria_padre = $data['categoria_padre'];
             $categoria->save();
 
-            return new JsonResponse(['res'=>1, 'msg'=>'categoria creada']);
+            return new JsonResponse(['res'=>1, 'msg'=>'categoria creada', 'data'=> $data]);
     }
 
 

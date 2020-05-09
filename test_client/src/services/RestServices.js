@@ -13,7 +13,8 @@ const RestService = axios.create({
   baseURL: url,
   headers: {
    'token': '',
-   'session': token ? token.session : ''
+   'session': token ? token.session : '',
+   
   }
 })
 

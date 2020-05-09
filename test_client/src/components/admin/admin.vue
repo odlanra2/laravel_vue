@@ -5,7 +5,7 @@
         <b-button v-b-modal.modal-1>Añadir categorias +</b-button>
 
         <b-modal id="modal-1" ref="my-modal" title="Categorias">
-            <form  @submit.prevent="crear">
+            <form  @submit.prevent="crear" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nombre de la categoria</label>
                   <input type="text" class="form-control" id="nom" v-model="nombre"  placeholder="nombre de la categoria">
@@ -13,9 +13,12 @@
                 </div>
                 <div class="form-group">
                   <label for="">Añadir imagen para la categoria</label>
-                  <input type="text" class="form-control" id="img" v-model="imagen"  placeholder="Descripcion">
                  
+                 <input type="file" @change="ObtenerImagen" class="form-control-file" id="image" name="image" >
 
+                 <figure>
+                    <img width="200" heigth="200" :src="ImagenMI" />
+                 </figure>
                 </div>
                  <div class="form-group">
                   <label for="">Categoria padre</label>
@@ -35,6 +38,9 @@
           </form>
         </b-modal>
      </div>
+
+ 
+
     <table class="table table-hover table-striped">
     <thead>
         <tr>
@@ -47,6 +53,7 @@
         </tr>
     </thead>
     <tbody>
+      
       <tr v-for="(row, index) in AllCategoria">
         <td>{{ row.nombre }}</td>
         <td>{{ row.foto }}</td>
@@ -57,7 +64,7 @@
       </tr>
     </tbody>
 </table>
-  
+
 </div>
  
 </template>
@@ -69,10 +76,12 @@
 
       data(){
       	return {
+           ImagenMiniatura:'',
            nombre: '',
            imagen: '',
+           img:'e',
            categoria_id: '0',
-           AllCategoria:[]
+           AllCategoria:[],
 
       	}
       },
@@ -80,7 +89,13 @@
      computed:{
           All:function(){
             return this.AllCategorias();
-          }  
+          },
+
+          ImagenMI:function(){
+            return this.ImagenMiniatura
+          } 
+
+
      },
 
      methods:{
@@ -88,16 +103,38 @@
        this.$refs['my-modal'].hide()
       },
 
+      ObtenerImagen(e){
+        let file= e.target.files[0]
+        this.imagen= e.target.files[0]
+        
+        this.CargarImagen(file);
+      },
+
+      CargarImagen(i){
+        let Reader = new FileReader()
+        Reader.onload = (e) =>{
+          this.ImagenMiniatura= e.target.result
+        }
+
+        Reader.readAsDataURL(i)
+      },
+
       onChange(event) {
-            console.log(event.target.value)
             this.categoria_id=event.target.value
         },
       crear(){
-         TestServices.post('categoria/created', {nombre:this.nombre, foto:this.imagen, categoria_padre:this.categoria_id}).then(res=>{
+           console.log(this.imagen);
+           let formData= new FormData()
+           formData.append('nombre',this.nombre)
+           formData.append('foto', this.imagen)
+           formData.append('categoria_padre', this.categoria_id)
+
+         TestServices.post('categoria/created', formData).then(res=>{
+             console.log(res.data);  
              this.nombre=''
              this.imagen=''
              this.categoria_id=''
-
+            
              this.hideModal()
              this.AllCategorias()
           })
@@ -105,7 +142,7 @@
 
        AllCategorias(){
          TestServices.get('categoria/get').then(res=>{
-               console.log(res.data);
+               
                this.AllCategoria = res.data;
               
            })

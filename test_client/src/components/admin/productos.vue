@@ -5,7 +5,7 @@
         <b-button v-b-modal.modal-1>Añadir Productos +</b-button>
           
         <b-modal id="modal-1" ref="my-modal" title="Productos">
-            <form  @submit.prevent="crear">
+            <form  @submit.prevent="crear" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="">Nombre </label>
                   <input type="text" class="form-control" id="nom" v-model="nombre"  placeholder="nombre del producto">

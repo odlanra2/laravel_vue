@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+import VuePaginate from 'vue-paginate'
+Vue.use(VuePaginate)
+
 // Install BootstrapVue
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin

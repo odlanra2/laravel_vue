@@ -1,14 +1,15 @@
 <template>
   <div class="container">
-  	<h2 class="text-center">Bienvenido</h2>
-    <div class="d-flex justify-content-center">
+  	
+    <center class="container col-6 marg">
+      <h2 >Bienvenido</h2>
        <form @submit.prevent="login"  name="login">
       
       <div class="form-group">
         <div class="input-group">
           
           <i class="bar"/>
-          <input type="text" id="user" v-model="user"   required="required" name="user" placeholder="usuario" />
+          <input type="text" class="form-control" id="user" v-model="user"   required="required" name="user" placeholder="usuario" />
          
         </div>
       </div>
@@ -16,7 +17,7 @@
         <div class="input-group">
          
           <i class="bar"/>
-          <input type="password" id="password"  v-model="pwd"   required="required" name="password" autocomplete="on" placeholder="password"/>
+          <input type="password" class="form-control" id="password"  v-model="pwd"   required="required" name="password" autocomplete="on" placeholder="password"/>
          
         </div>
       </div>
@@ -37,7 +38,7 @@
       </div>
     </form>
 
-    </div>
+    </center>
    
     
 
@@ -84,3 +85,10 @@ export default {
 };
 
 </script>	
+<style>
+.marg{
+  position: absolute;
+  margin:0 auto;
+  margin-top:50px;
+}
+</style>
