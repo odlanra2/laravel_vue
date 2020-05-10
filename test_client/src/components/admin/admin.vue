@@ -14,7 +14,7 @@
                 <div class="form-group">
                   <label for="">Añadir imagen para la categoria</label>
                  
-                 <input type="file" @change="ObtenerImagen" class="form-control-file" id="image" name="image" >
+                 <input type="file" @change="ObtenerImagen" class="form-control-file" id="file" ref="file" name="image" >
 
                  <figure>
                     <img width="200" heigth="200" :src="ImagenMI" />
@@ -56,7 +56,7 @@
       
       <tr v-for="(row, index) in AllCategoria">
         <td>{{ row.nombre }}</td>
-        <td>{{ row.foto }}</td>
+        <td><img height="80" width="80" :src="'http://localhost:8000/'+row.foto"></td>
         <td>{{ row.categoria_padre}}</td>
         <td><button class="btn btn-primary">Editar</button></td>
         <td><button class="btn btn-primary">Eliminar</button></td>
@@ -78,7 +78,7 @@
       	return {
            ImagenMiniatura:'',
            nombre: '',
-           imagen: '',
+           imagen: {},
            img:'e',
            categoria_id: '0',
            AllCategoria:[],
@@ -105,9 +105,12 @@
 
       ObtenerImagen(e){
         let file= e.target.files[0]
-        this.imagen= e.target.files[0]
-        
+        //this.imagen= e.target.files[0]
+         this.imagen = this.$refs.file.files[0];
+
+         console.log(this.imagen)
         this.CargarImagen(file);
+
       },
 
       CargarImagen(i){
@@ -115,8 +118,9 @@
         Reader.onload = (e) =>{
           this.ImagenMiniatura= e.target.result
         }
-
+        
         Reader.readAsDataURL(i)
+
       },
 
       onChange(event) {
@@ -126,7 +130,7 @@
            console.log(this.imagen);
            let formData= new FormData()
            formData.append('nombre',this.nombre)
-           formData.append('foto', this.imagen)
+           formData.append('file', this.imagen)
            formData.append('categoria_padre', this.categoria_id)
 
          TestServices.post('categoria/created', formData).then(res=>{

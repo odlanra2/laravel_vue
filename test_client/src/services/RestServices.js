@@ -14,6 +14,7 @@ const RestService = axios.create({
   headers: {
    'token': '',
    'session': token ? token.session : '',
+  // 'content-type': 'multipart/form-data'
    
   }
 })

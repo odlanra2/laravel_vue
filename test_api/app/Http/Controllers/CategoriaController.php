@@ -10,6 +10,8 @@ class CategoriaController extends Controller
     //
     protected function get_all(){
         $categoria = categoria::all();
+        
+
         return new JsonResponse(['res'=>1, 'data'=>$categoria]);
    }
 
@@ -22,13 +24,18 @@ class CategoriaController extends Controller
 
    protected function created(Request $request){
             $data = $request->all();
+            //$file = $request->file->path();
+            $file = $request->file('file');
+
+            $path = $file->store('img_categoria');
+
             $categoria = new categoria();
             $categoria->nombre = $data['nombre'];
-            $categoria->foto= 'defecto';
+            $categoria->foto= $path;
             $categoria->categoria_padre = $data['categoria_padre'];
             $categoria->save();
 
-            return new JsonResponse(['res'=>1, 'msg'=>'categoria creada', 'data'=> $data]);
+            return new JsonResponse(['res'=>1, 'msg'=>'categoria creada', 'data'=> $path]);
     }
 
 
