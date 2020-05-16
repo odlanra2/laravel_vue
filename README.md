@@ -1,6 +1,5 @@
 Proyecto de prueba 
 
-Para correr el sitama back debes abrir consola ir al directorio test_api ingresar php composer install para instalar las dependencias
 
 crear una copia del archivo .env.example y cambiar el nombre .env colocar la base de datos
 
